@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   def create
-    current_user.comments.create(comments_params)
+    @comment = current_user.comments.create(comments_params)
     redirect_to root_path
   end
 

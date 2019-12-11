@@ -1,0 +1,7 @@
+<h1>Users Index</h1>
+<% @users.each do |user| %>
+  <p>email: <%= user.email %></p>
+  <p>badges: <%= user.badges %></p>
+  <p>points: <%= user.points %></p>
+  <hr>
+<% end %>
