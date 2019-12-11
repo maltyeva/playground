@@ -1,0 +1,15 @@
+<h1>Home Page</h1>
+<%= form_with model: Comment.new, local: true do |f|%>
+  <div class="field">
+    <%= f.text_area comment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<% @comments.each do |comment| %>
+  <div class="comment">
+    <%= comment.content %>
+    <%= link_to "delete", comment_path(comment),  method: :delete  %>
+  </div>
+<% end %>
