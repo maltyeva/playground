@@ -12,7 +12,7 @@
   <%= @post.content %>
 </p>
 <% if @liked_post %>
-  <%= link_to "unlike", post_like_path(@post, id: @liked_post.id), method: :delete  %>
+  <%= link_to "unlike", post_like_path(@post, id: @liked_post.id.to_global_id), method: :delete  %>
 <% else %>
   <%= link_to "like", post_likes_path(@post), method: :post %>
 <% end %>
