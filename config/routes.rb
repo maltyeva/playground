@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :posts
+  resources :posts do
+    scope module:  :posts do
+      resources :likes, only: [:create, :destroy]
+    end
+  end
   root to:  'pages#home'
   devise_for :users
   resources :comments, only: [:create, :destroy]
