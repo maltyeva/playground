@@ -34,6 +34,7 @@ gem 'font-awesome-sass', '~> 5.6.1'
 
 
 gem 'devise'
+gem 'faker'
 gem 'merit'
 
 group :development, :test do
