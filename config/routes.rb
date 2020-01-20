@@ -4,7 +4,9 @@ Rails.application.routes.draw do
       resources :likes, only: [:create, :destroy]
     end
   end
-  root to:  'pages#home'
+  root 'pages#home'
+
+  get 'about', to: "pages#about"
   devise_for :users
   resources :comments, only: [:create, :destroy]
   resources :users, only: :index

@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
     redirect_to root_path
   end
 
+
   private
 
   def comments_params
