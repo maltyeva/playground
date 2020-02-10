@@ -10,6 +10,6 @@
 <% @comments.each do |comment| %>
   <div class="comment">
     <%= comment.content %>
-    <%= link_to "delete", comment_path(comment),  method: :delete  %>
+    <%= link_to "delete", comment_path(comment),  method: :delete, data: {confirm: "Are you sure?"}  %>
   </div>
 <% end %>
