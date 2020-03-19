@@ -1,0 +1,9 @@
+<tr>
+  <td>
+    <%= f.input_field :_destroy, as: :hidden %>
+    <%= link_to "delete", "#", class: "remove_record"  %>
+  </td>
+  <td><%= f.input :name, label: false %></td>
+  <td><%= f.input :completed, %></td>
+  <td><%= f.input :due, as: :string %></td>
+</tr>

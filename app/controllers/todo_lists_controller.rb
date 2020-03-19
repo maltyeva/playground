@@ -62,13 +62,13 @@ class TodoListsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_todo_list
-      @todo_list = TodoList.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_todo_list
+    @todo_list = TodoList.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def todo_list_params
-      params.require(:todo_list).permit(:name)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def todo_list_params
+    params.require(:todo_list).permit(:name, tasks_attributes: Task.attribute_names.map(&:to_sym).push(:_destroy) )
+  end
 end
