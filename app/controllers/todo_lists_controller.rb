@@ -15,6 +15,7 @@ class TodoListsController < ApplicationController
   # GET /todo_lists/new
   def new
     @todo_list = TodoList.new
+    @todo_list.tasks.build
   end
 
   # GET /todo_lists/1/edit
