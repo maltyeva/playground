@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :lists
+  resources :companies
   resources :posts do
     scope module:  :posts do
       resources :likes, only: [:create, :destroy]
