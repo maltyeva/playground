@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :lists
+  resources :lists do
+    resources :columns, except: [:index, :show] do
+      resources :items, except: [:index, :show]
+    end
+  end
   resources :companies
   resources :posts do
     scope module:  :posts do

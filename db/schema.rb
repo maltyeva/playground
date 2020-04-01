@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_030544) do
+ActiveRecord::Schema.define(version: 2020_04_01_030927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "badges_sashes", force: :cascade do |t|
     t.integer "badge_id"
@@ -23,6 +54,14 @@ ActiveRecord::Schema.define(version: 2020_03_31_030544) do
     t.index ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
     t.index ["badge_id"], name: "index_badges_sashes_on_badge_id"
     t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
+  end
+
+  create_table "columns", force: :cascade do |t|
+    t.bigint "list_id", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["list_id"], name: "index_columns_on_list_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -37,6 +76,13 @@ ActiveRecord::Schema.define(version: 2020_03_31_030544) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.bigint "column_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["column_id"], name: "index_items_on_column_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -121,7 +167,10 @@ ActiveRecord::Schema.define(version: 2020_03_31_030544) do
     t.index ["user_id"], name: "index_users_posts_on_user_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "columns", "lists"
   add_foreign_key "comments", "users"
+  add_foreign_key "items", "columns"
   add_foreign_key "lists", "companies"
   add_foreign_key "posts", "users"
   add_foreign_key "users", "companies"

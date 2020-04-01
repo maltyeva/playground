@@ -17,3 +17,6 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "sweetalert"
+require("trix")
+require("@rails/actiontext")
+import "controllers"
