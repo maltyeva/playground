@@ -1,20 +1,12 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-
-  # GET /items
-  # GET /items.json
-  def index
-    @items = Item.all
-  end
-
-  # GET /items/1
-  # GET /items/1.json
-  def show
-  end
+  before_action :authenticate_user!
+  before_action :set_list
+  before_action :set_column
 
   # GET /items/new
   def new
-    @item = Item.new
+    @item = @column.items.new
   end
 
   # GET /items/1/edit
@@ -24,11 +16,11 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    @item = Item.new(item_params)
+    @item = @column.items.new(item_params)
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
+        format.html { redirect_to @list, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else
         format.html { render :new }
@@ -42,7 +34,7 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
+        format.html { redirect_to @list, notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit }
@@ -56,19 +48,26 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
+      format.html { redirect_to @list, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = Item.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def item_params
-      params.require(:item).permit(:column_id)
-    end
+  def set_list
+    @list = current_company.lists.includes(columns: :items).find(params[:list_id])
+  end
+
+  def set_column
+    @list.columns.find(params[:column_id])
+  end
+  # Only allow a list of trusted parameters through.
+  def item_params
+    params.require(:item).permit(:column_id)
+  end
 end
