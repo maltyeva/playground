@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Company:</strong>
-  <%= @list.company_id %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @list.name %>
-</p>
-
-<%= link_to 'Edit', edit_list_path(@list) %> |
-<%= link_to 'Back', lists_path %>
+<div class="container">
+  <p id="notice"><%= notice %></p>
+  <p>
+    <strong>Name:</strong>
+    <%= @list.name %>
+  </p>
+  <%= content_tag :div, class: :row do%>
+    <% @list.columns.each do |column| %>
+      <div class="col">
+        <div class="card">
+          <div class="card-title">
+            <%= column.name %>
+          </div>
+          <div class="card-body">
+            <%= content_tag :ul, class: "card-text dropzone" do %>
+              <%= render column.items, list: @list, column: column %>
+            <% end %>
+          </div>
+          <%= link_to "new item", [:new, @list, column, :item]  %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= link_to "new column", [:new, @list, :column]  %>
+  <%= link_to 'Edit', edit_list_path(@list) %> |
+  <%= link_to 'Back', lists_path %>
+</div>

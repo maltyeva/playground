@@ -64,10 +64,10 @@ class ItemsController < ApplicationController
   end
 
   def set_column
-    @list.columns.find(params[:column_id])
+    @column = @list.columns.find(params[:column_id])
   end
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:column_id)
+    params.require(:item).permit(:column_id, :content)
   end
 end

@@ -1,0 +1,10 @@
+<%= content_tag :li do %>
+  <div class="card">
+    <div class="card-body">
+      <p class="card-text">
+        <%= item.content %>
+      </p>
+      <%= link_to 'delete', [list, column, item], method: :delete  %>
+    </div>
+  </div>
+<% end %>
